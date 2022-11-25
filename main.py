@@ -5,11 +5,6 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 
-#url = 'https://scalelite.deu.edu.tr/playback/presentation/2.3/40a8bd71e0fe7d77e2e38308c647f597adc719ca-1615888815878?AccessToken=Dbvcic9j5s1x7wq'
-
-
-
-
 def url_fetcher():
     url = input('Enter the record url: ')
     driver = webdriver.Chrome('./chromedriver')
