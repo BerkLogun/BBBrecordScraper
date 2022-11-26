@@ -1,7 +1,9 @@
 import requests
+import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from moviepy.editor import *
 import time
 
 
@@ -55,6 +57,9 @@ def download_video(url, filename):
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
+        f.close()
+
+
 
 
 if __name__ == '__main__':
@@ -62,4 +67,18 @@ if __name__ == '__main__':
     download_video(webcam_url, 'webcam'+video_name)
     download_video(deskshare_url, 'deskshare'+video_name)
 
-    
+    webcam_clip = VideoFileClip('webcam'+video_name)
+    deskshare_clip = VideoFileClip('deskshare'+video_name)
+    webcam_audio = webcam_clip.audio
+
+    audio_clip = CompositeAudioClip([webcam_audio])
+    deskshare_clip.audio = audio_clip
+    deskshare_clip.write_videofile(video_name)
+
+    webcam_clip.close()
+    deskshare_clip.close()
+
+    time.sleep(5)
+
+    os.remove('webcam'+video_name)
+    os.remove('deskshare'+video_name)
